@@ -1,23 +1,29 @@
-import mongoose from 'mongoose';
-import { BitGrid } from '../types';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { BitGrid, ColorNumber, Grid, Palette } from '../types';
 
-const BitGridSchema = new mongoose.Schema<BitGrid>({
-  name: { 
-    type: String,
-    required: true
-  },
-  grid: {
-    type: [[Boolean]],
-    required: true,
-    validate: {
-      validator: function(grid: boolean[][]) {
-        return grid.length > 0 && grid.every(row => row.length === grid[0].length);
-      },
-      message: 'Grid must be a non-empty rectangular array'
-    }
-  }
-}, {
-  timestamps: true
-});
+@Entity('bit_grids')
+export class BitGridEntity implements BitGrid {
+  @PrimaryGeneratedColumn('uuid')
+  _id: string;
 
-export const BitGridModel = mongoose.model<BitGrid>('BitGrid', BitGridSchema);
+  @Column({ nullable: true })
+  aiArtUrl?: string;
+
+  @Column({ nullable: true })
+  author?: string;
+
+  @Column('jsonb')
+  composition: Grid;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @Column({ nullable: true })
+  name?: string;
+
+  @Column('jsonb')
+  palette: Palette;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
+}

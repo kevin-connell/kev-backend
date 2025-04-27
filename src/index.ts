@@ -1,8 +1,9 @@
+import 'reflect-metadata';
 import express from 'express';
-import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import bitGridRoutes from './routes/bitGridRoutes';
+import { AppDataSource } from './config/database';
 
 dotenv.config();
 
@@ -16,16 +17,15 @@ app.use(express.json());
 // Routes
 app.use('/api/bitgrids', bitGridRoutes);
 
-// MongoDB connection
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/bitgrid-db';
-
-mongoose.connect(MONGODB_URI)
+// Database connection
+AppDataSource.initialize()
   .then(() => {
-    console.log('Connected to MongoDB');
+    console.log('Connected to PostgreSQL database');
     app.listen(port, () => {
       console.log(`Server is running on port ${port}`);
     });
   })
   .catch((error) => {
-    console.error('MongoDB connection error:', error);
+    console.error('Database connection error:', error);
+    process.exit(1);
   });
