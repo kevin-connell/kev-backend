@@ -1,5 +1,7 @@
 import { DataSource } from 'typeorm';
 import { BitGridEntity } from '../models/BitGrid';
+import { InitialMigration1745779278018 } from '../migrations/1745779278018-InitialMigration';
+import { UpdateBitGridSchema1745779877069 } from '../migrations/1745779877069-UpdateBitGridSchema';
 
 const config = process.env.DATABASE_URL
   ? {
@@ -24,6 +26,6 @@ export const AppDataSource = new DataSource({
   ...config,
   logging: process.env.NODE_ENV !== 'production',
   entities: [BitGridEntity],
-  migrations: [],
+  migrations: [InitialMigration1745779278018, UpdateBitGridSchema1745779877069],
   subscribers: [],
 });
