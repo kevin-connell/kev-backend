@@ -31,11 +31,14 @@ npm install
 
 3. Create a `.env` file in the root directory with the following variables:
 ```env
-DB_HOST=localhost
-DB_PORT=5432
-DB_USER=your_username
-DB_PASSWORD=your_password
-DB_NAME=bitgrid
+# PostgreSQL Configuration
+PGHOST=localhost
+PGPORT=5432
+PGUSER=your_username
+PGPASSWORD=your_password
+PGDATABASE=bitgrid
+
+# Application Configuration
 PORT=3000
 NODE_ENV=development
 ```
@@ -49,6 +52,54 @@ createdb bitgrid
 ```bash
 npm run migration:run
 ```
+
+## Environment Variables
+
+### Local Development
+Create a `.env` file in the root directory with the following variables:
+```env
+# PostgreSQL Configuration
+PGHOST=localhost
+PGPORT=5432
+PGUSER=your_username
+PGPASSWORD=your_password
+PGDATABASE=bitgrid
+
+# Application Configuration
+PORT=3000
+NODE_ENV=development
+```
+
+### Railway Deployment
+The following variables are automatically set by Railway for PostgreSQL:
+```env
+# PostgreSQL Connection URL (primary connection method)
+DATABASE_URL=postgresql://user:password@host:port/database
+DATABASE_PUBLIC_URL=postgresql://user:password@host:port/database
+
+# Individual PostgreSQL Variables (automatically set)
+PGDATA=/var/lib/postgresql/data
+PGDATABASE=railway
+PGHOST=host.railway.internal
+PGPASSWORD=your-password
+PGPORT=5432
+PGUSER=postgres
+
+# PostgreSQL Admin Variables
+POSTGRES_DB=railway
+POSTGRES_PASSWORD=your-password
+POSTGRES_USER=postgres
+
+# Railway Specific
+RAILWAY_DEPLOYMENT_DRAINING_SECONDS=0
+SSL_CERT_DAYS=365
+
+# Application Variables (set these manually in Railway)
+PORT=3000
+NODE_ENV=production
+```
+
+No additional configuration is needed as the application will automatically use these variables in the Railway environment.
 
 ## Running the Application
 
