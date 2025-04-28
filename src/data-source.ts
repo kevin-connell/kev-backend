@@ -1,6 +1,7 @@
+import 'reflect-metadata';
 import { DataSource } from 'typeorm';
-import { BitGridEntity } from '../models/BitGrid';
-import { InitialMigration1745779877069 } from '../migrations/1745779877069-InitialMigration';
+import { BitGridEntity } from './models/BitGrid';
+import { InitialMigration1745779877069 } from './migrations/1745779877069-InitialMigration';
 
 const config = process.env.DATABASE_URL
   ? {
